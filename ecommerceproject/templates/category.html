@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block metadiscription %}
+{% if Category %}
+  {{Category.description | truncatewords:155}}
+{% else %}
+  WELCOME TO MYNTRA......
+{% endif %}
+{% endblock %}
+
+{% block title %}
+  {% if Category %}
+     {{Category.name}}MYNTRA
+  {% else %}
+     MYNTRA
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if category %}
+  <div>
+    <div class="row my_row_class">
+      <div class="mx-auto">
+      <p><a href="{% url 'shopapp:Allprodcat' %}"><b>See All Collections</b></a></p>
+      </div>
+    </div>
+  </div>
+{% endif %}
+<div class="mx_auto">
+  {% if category %}
+      <img class="my_image" src ="{{category.image.url}}" alt="{{category.name}}">
+</div>
+<br>
+  <div>
+  <h1 class="text-center my_title">{{category.name}}</h1>
+  <p class="text-justify">{{category.description}}</p>
+  </div>
+  {% else %}
+     <img class="my_image my_image_padding" src ="{% static 'img/banner.png' %}" alt="Our products" width="1215px;">
+    <div>
+    <h1 class="text-center my_title"><i><b>BEST ONLINE SHOPPING SITE IN INDIA FOR FASHION</b></i></h1><br>
+    <p class="text-justify" align="center"><u><i>OUR PRODUCTS COLLECTIONS</i></u><br><br>
+    <b><u>Smart men’s clothing</u> </b>&nbsp;&nbsp;
+    <b><u>Trendy women’s clothing</u></b>&nbsp;&nbsp;
+    <b><u>Fashionable footwear</u></b> &nbsp;&nbsp;
+    <b><u>Stylish accessories</u></b>&nbsp;&nbsp;
+  </div>
+  {% endif %}
+<div class="container">
+  <div class="row mx_auto">
+    {% for product in products.object_list %}
+    <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+      <div class="card text-center" style="min-width:18rem;">
+        <a href="{{product.get_url}}"><img class="card-img-top my_image" src="{{product.image.url}}" alt="{{product.name}}"></a>
+        <div class="card-body">
+          <h1>{{product.name}}</h1>
+          <h3>{{product.price}}</h3>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="mx_auto">
+      {% if products.paginator.num_pages > 1 %}
+
+      <hr>
+      <div class="text-center">
+        {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+  </div>
+  <br>
+</div>
+{% endblock %}
