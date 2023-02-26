@@ -21,7 +21,7 @@
 
 <div class="row my_prod_row_class">
   <div class="mx_auto">
-    <p><a href="{% url 'shopapp:Allprodcat' %}">Home</a> | <a href="{{product.catrgory.get_url}}">{{product.category}}</a> |{{product.name}}</p>
+    <p><a href="{% url 'shopapp:Allprodcat' %}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> |{{product.name}}</p>
   </div>
 </div>
 <div class="container">
